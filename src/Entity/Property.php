@@ -181,12 +181,12 @@ class Property
 
     public function getHeat(): ?int
     {
-        return self::HEAT[$this->heat];
+        return $this->heat;
     }
 
     public function getHeatType(): string
     {
-        return $this->heat;
+        return self::HEAT[$this->heat];
     }
 
     public function setHeat(int $heat): self
