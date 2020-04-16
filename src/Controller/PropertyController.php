@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller;
 
 use App\Entity\Property;
@@ -35,8 +36,9 @@ class PropertyController extends AbstractController
     /**
      * @Route("/property", name="property")
      */
-    public function index()
+    public function index():Response
     {
+
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
         ]);

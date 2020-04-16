@@ -44,6 +44,11 @@ class Property
     /**
      * @ORM\Column(type="integer")
      */
+    private $floor;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $rooms;
 
     /**
@@ -62,9 +67,9 @@ class Property
     private $heat;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":false})
+     * @ORM\Column(type="boolean")
      */
-    private $sold;
+    private $sold = false;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -84,12 +89,11 @@ class Property
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_at;
+    private $created_at;
 
     public function _construct()
     {
-        $this->create_at = new \DateTime();
-        $this->sold = false;
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -109,9 +113,21 @@ class Property
         return $this;
     }
 
+    public function getFloor(): ?int
+    {
+        return $this->floor;
+    }
+
+    public function setFloor(int $floor): self
+    {
+        $this->floor = $floor;
+
+        return $this;
+    }
+
     public function getSlug(): ?string
     {
-       return (new Slugify())->slugify($this->title);
+        return (new Slugify())->slugify($this->title);
     }
 
     public function getDescription(): ?string
@@ -244,6 +260,11 @@ class Property
         return $this;
     }
 
+    public function __construct()
+    {
+        $this->created_at = new\DateTime();
+    }
+
     public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->create_at;
@@ -255,4 +276,6 @@ class Property
 
         return $this;
     }
+
+
 }

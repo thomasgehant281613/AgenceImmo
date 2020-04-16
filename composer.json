@@ -28,7 +28,8 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "5.0.*",
         "symfony/web-link": "5.0.*",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+      "ext-http": "*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
