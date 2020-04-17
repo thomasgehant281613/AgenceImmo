@@ -1,0 +1,17 @@
+<div class="card md-4" xmlns:font-weight="http://www.w3.org/1999/xhtml" >
+    {% if property.filename %}
+        <img src="/images/properties/{{ property.filename }}" alt="card-img-top" style="width: 100%; height: auto">
+
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="{{ path('property.show', {slug: property.slug, id: property.id}) }}">
+                {{ property.title }}
+            </a>
+        </h5>
+        <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
+        <div class="text-primary" style="font-size: 2rem; font-weight: bold";>{{ property.formattedPrice }} €</div>
+    </div>
+
+
+</div>
