@@ -14,8 +14,11 @@
                     {{ form_row (form.maxPrice) }}
                 </div>
                 <div class="col">
+                    {{ form_row (form.options) }}
+                </div>
+                <div class="col">
                     <div class="form-group">
-                    <button class="btn btn-primary">Rechercher</button>
+                        <button class="btn btn-primary">Rechercher</button>
                     </div>
                 </div>
             </div>
@@ -28,11 +31,11 @@
         <div class="row">
 
             {% for property in properties %}
-            <div class="col-md-4">
+                <div class="col-md-4">
 
-            {% include 'property/_property.html.twig' %}
-            </div>
-        {% endfor %}
+                    {% include 'property/_property.html.twig' %}
+                </div>
+            {% endfor %}
 
         </div>
         <div class="pagination">

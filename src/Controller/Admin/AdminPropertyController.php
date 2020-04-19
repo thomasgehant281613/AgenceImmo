@@ -38,17 +38,18 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property", name="admin_property.index")
+     * @Route("/admin/property", name="admin.index")
      */
 
     public function index()
     {
         $properties = $this->repository->findAll();
-        return $this->render('admin_property/index.html.twig', compact('properties'));
+        return $this->render('admin/property/index.html.twig', compact('properties'));
     }
 
     /**
-     * @Route("/admin/property/create", name="admin_property.new")
+     * @Route("/admin/property/create", name="admin.new")
+     * @param Property $property
      * @param Request $request
      * @return RedirectResponse|Response
      * @throws ORMException
@@ -56,9 +57,8 @@ class AdminPropertyController extends AbstractController
      */
 
 
-    public function new(Request $request)
+    public function new(Property $property, Request $request)
     {
-        $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
@@ -66,10 +66,10 @@ class AdminPropertyController extends AbstractController
             $this->em->persist($property);
             $this->em->flush();
             $this->addFlash('success','Le bien a été créé avec succès');
-            return $this->redirectToRoute('admin_property.new');
+            return $this->redirectToRoute('admin.new');
 
         }
-        return $this->render('admin_property/new.html.twig', [
+        return $this->render('admin/property/new.html.twig', [
             'property' => $property,
             'form' => $form->createView()
 
@@ -77,7 +77,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin_property.edit", methods="GET|POST")
+     * @Route("/admin/property/{id}", name="admin.edit", methods="GET|POST")
      * @param Property $property
      * @param Request $request
      * @return RedirectResponse|Response
@@ -93,10 +93,10 @@ class AdminPropertyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
             $this->addFlash('success','Le bien a été modifié avec succès');
-            return $this->redirectToRoute('admin_property.index');
+            return $this->redirectToRoute('admin.index');
 
         }
-        return $this->render('admin_property/edit.html.twig', [
+        return $this->render('admin/property/edit.html.twig', [
             'property' => $property,
             'form' => $form->createView()
 
@@ -104,7 +104,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin_property.delete", methods="DELETE")
+     * @Route("/admin/property/{id}", name="admin.delete", methods="DELETE")
      * @param Property $property
      * @param Request $request
      * @return RedirectResponseAlias
@@ -118,6 +118,6 @@ class AdminPropertyController extends AbstractController
             $this->em->flush();
             $this->addFlash('success', 'Le bien a été supprimé avec succès');
 
-        return $this->redirectToRoute('admin_property.index');
+        return $this->redirectToRoute('admin.index');
     }
 }

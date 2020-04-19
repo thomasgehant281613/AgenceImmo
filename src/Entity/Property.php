@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
@@ -41,7 +43,9 @@ class Property
     private $filename;
 
     /**
-     * @var File
+     * @var File|null
+     * @Assert\Image:
+     *  mimeTypes=("images/jpeg")
      *  @Vich\UploadableField(mapping="property_image", fileNameProperty="filename")
      */
     private $imageFile;
@@ -120,6 +124,10 @@ class Property
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Option", inversedBy="properties")
+     */
+    private $options;
 
 
     public function _construct()
@@ -294,6 +302,7 @@ class Property
     public function __construct()
     {
         $this->created_at = new\DateTime();
+        $this->options = new ArrayCollection();
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -318,10 +327,12 @@ class Property
 
     /**
      * @param string|null $filename
+     * @return Property
      */
-    public function setFilename(?string $filename): void
+    public function setFilename(?string $filename): Property
     {
         $this->filename = $filename;
+        return $this;
     }
 
     /**
@@ -333,11 +344,11 @@ class Property
     }
 
     /**
-     * @param File $imageFile
+     * @param null|File $imageFile
      * @return Property
      * @throws \Exception
      */
-    public function setImageFile(File $imageFile): Property
+    public function setImageFile(?File $imageFile): Property
     {
         $this->imageFile = $imageFile;
         if($this->imageFile instanceof UploadedFile ){
@@ -354,6 +365,34 @@ class Property
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Option[]
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+            $option->addProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): self
+    {
+        if ($this->options->contains($option)) {
+            $this->options->removeElement($option);
+            $option->removeProperty($this);
+        }
 
         return $this;
     }
