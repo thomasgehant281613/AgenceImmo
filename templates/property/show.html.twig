@@ -3,11 +3,16 @@
 {% block title property.title%}
 
 {% block body %}
-    <div class="jumbotron">
+    <div class="jumbotron" xmlns:font-weight="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
+         xmlns:height="http://www.w3.org/1999/xhtml" xmlns:background-size="http://www.w3.org/1999/xhtml">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-
+                    {% if property.filename %}
+                        <img src="{{ vich_uploader_asset(property, 'imageFile') }}" alt="card-img-top"; style="width: 100%"; height="530"; />
+                    {% else %}
+                        <img src="{{ ' /images/empty/empty.jpg ' }}" alt="card-img-top" ; width="100%"; height="530";  />
+                    {% endif %}
                 </div>
                 <div class="col-md-4 " xmlns:font-weight="http://www.w3.org/1999/xhtml">
                     <h1>{{ property.title }}</h1>
@@ -47,6 +52,11 @@
             </div>
             <div class="col-md-4">
                 <h2>Spécificités</h2>
+                <ul class="list-group">
+                    {% for option in property.options %}
+                        <li class="list-group-item">{{ option.name }}</li>
+                    {% endfor %}
+                </ul>
             </div>
 
         </div>
