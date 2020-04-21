@@ -6,6 +6,13 @@
     <div class="jumbotron" xmlns:font-weight="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
          xmlns:height="http://www.w3.org/1999/xhtml" xmlns:background-size="http://www.w3.org/1999/xhtml">
         <div class="container">
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             <div class="row">
                 <div class="col-md-8">
                     {% if property.filename %}
@@ -19,6 +26,22 @@
                     <h2>{{ property.rooms }} pièces - {{ property.surface }} m²</h2>
                     <div class="text-primary" style="font-size: 3rem"; font-weight: bold>{{ property.formattedPrice }} €</div>
                     <a href="#" class="btn btn-primary">Contacter l'agence</a>
+                    <div id="contactForm" class="'mt-4">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col">{{ form_row(form.firstname) }}</div>
+                            <div class="col">{{ form_row(form.lastname) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{ form_row(form.phone) }}</div>
+                            <div class="col">{{ form_row(form.email) }}</div>
+                        </div>
+                        {{ form_rest(form) }}
+                        <div class="form-group">
+                            <button class="btn btn-primary">Envoyer</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
         </div>
