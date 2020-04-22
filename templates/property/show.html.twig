@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title property.title%}
+{% block title property.title %}
 
 {% block body %}
     <div class="jumbotron" xmlns:font-weight="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml"
@@ -16,17 +16,25 @@
             <div class="row">
                 <div class="col-md-8">
                     {% if property.filename %}
-                        <img src="{{ vich_uploader_asset(property, 'imageFile') }}" alt="card-img-top"; style="width: 100%"; height="530"; />
+                        <img src="{{ vich_uploader_asset(property, 'imageFile') }}" alt="card-img-top" ;
+                             style="width: 100%" ; height="530" ;/>
                     {% else %}
-                        <img src="{{ ' /images/empty/empty.jpg ' }}" alt="card-img-top" ; width="100%"; height="530";  />
+                        <img src="{{ ' /images/empty/empty.jpg ' }}" alt="card-img-top" ; width="100%" ; height="530"
+                             ;/>
                     {% endif %}
                 </div>
                 <div class="col-md-4 " xmlns:font-weight="http://www.w3.org/1999/xhtml">
                     <h1>{{ property.title }}</h1>
                     <h2>{{ property.rooms }} pièces - {{ property.surface }} m²</h2>
-                    <div class="text-primary" style="font-size: 3rem"; font-weight: bold>{{ property.formattedPrice }} €</div>
-                    <a href="#" class="btn btn-primary">Contacter l'agence</a>
-                    <div id="contactForm" class="'mt-4">
+                    <div class="text-primary" style="font-size: 3rem" ; font-weight: bold>{{ property.formattedPrice }}
+                        €
+                    </div>
+                    <a href="#" class="btn btn-primary" id="contactButton"
+                        {% if form.vars.submitted %}
+                        style="display: none;"
+                        {% endif %}>Contacter l'agence</a>
+                    <div id="contactForm"
+                         class="'mt-4" {% if not form.vars.submitted %} style="display: none;"{% endif %}>
                         {{ form_start(form) }}
                         <div class="row">
                             <div class="col">{{ form_row(form.firstname) }}</div>
@@ -83,7 +91,6 @@
             </div>
 
         </div>
-
 
 
     </div>
